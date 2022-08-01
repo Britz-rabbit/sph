@@ -1,13 +1,14 @@
 <template>
   <div>
-    <p>收到的params参数是{{$route.params.searchKeyWords}}</p>
-    <p>收到的query参数是{{$route.query.k}}</p>
+  <TypeNav></TypeNav>
+    这是search
   </div>
 </template>
 
 <script>
 export default {
- name:'search'
+ name:'search',
+
 }
 </script>
 

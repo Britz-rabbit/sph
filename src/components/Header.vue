@@ -63,13 +63,27 @@ export default {
             //尝试传参，要现在路由组件配置的path里面写一个占位符。其中/后面接的是params参数，?k=xxx后面接的是query参数。
             //其中query参数要大写，且是键值对形式
             //this.$router.push(`/search/${this.searchKeyWords}?k=${this.searchKeyWords.toUpperCase()}`)
-
             //进阶写法：组件间传参的对象写法，其中params和query都是对象，里面是键值对
-            this.$router.push({name:'search',params:{searchKeyWords:this.searchKeyWords},query:{k:this.searchKeyWords.toUpperCase()}},
-            ()=>{},()=>{})
+           if(this.$route.query){
+            let location={name:'search',params:{searchKeyWords:this.searchKeyWords}}
+            location.query=this.$route.query
+            this.$router.push(location)
+           }
         
             //此外，路由组件可以通过route里面设置prop:true便可以通过组件内的props来接受传过来的params参数
-        }
+        },
+
+    //   goSearch() {
+    //   //代表的是如果有query参数也带过去
+    //   if (this.$route.query) {
+    //     let loction = {
+    //       name: "search",
+    //       params: { keyword: this.keyword || undefined },
+    //     };
+    //     loction.query = this.$route.query;
+    //     this.$router.push(loction);
+    //   }
+    // },
     },
 };
 </script>

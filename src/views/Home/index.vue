@@ -16,7 +16,6 @@ import List from './List.vue'
 import Recommend from './Recommend.vue'
 import Rank from './Rand.vue'
 import Like from './Like.vue'
-import Image from './Floor.vue'
 import Floor from './Floor.vue'
 import Brand from './Brand.vue'
 
