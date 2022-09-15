@@ -5,15 +5,19 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
-          <p>
+          <p v-if="!userName">
             <span>请</span>
-            <router-link to="/login">登陆|</router-link>
+            <router-link to="/login">登陆 | </router-link>
             <router-link to="/register">免费注册</router-link>
+          </p>
+          <p v-else>
+            <span>{{userName}} | </span>
+            <a href="javascript:" @click="logout">退出登录</a>
           </p>
         </div>
         <div class="typeList">
-          <a href="###">我的订单</a>
-          <a href="###">我的购物车</a>
+          <router-link to="/center">我的订单</router-link>
+          <router-link to="/shopCart">我的购物车</router-link>
           <a href="###">我的尚品汇</a>
           <a href="###">尚品汇会员</a>
           <a href="###">企业采购</a>
@@ -52,6 +56,12 @@ export default {
     created() {
         
     },
+    mounted() {
+      this.$bus.$on('clear',()=>{
+        this.searchKeyWords=''
+        this.goSearch()
+      })
+    },
     data() {
         return {
             searchKeyWords:'',
@@ -59,31 +69,33 @@ export default {
         }
     },
     methods: {
+      //携带搜索关键字跳转到搜索组件
         goSearch(){
             //尝试传参，要现在路由组件配置的path里面写一个占位符。其中/后面接的是params参数，?k=xxx后面接的是query参数。
             //其中query参数要大写，且是键值对形式
             //this.$router.push(`/search/${this.searchKeyWords}?k=${this.searchKeyWords.toUpperCase()}`)
             //进阶写法：组件间传参的对象写法，其中params和query都是对象，里面是键值对
            if(this.$route.query){
-            let location={name:'search',params:{searchKeyWords:this.searchKeyWords}}
+            let location={name:'search',params:{keyword:this.searchKeyWords || undefined}}
             location.query=this.$route.query
             this.$router.push(location)
            }
-        
-            //此外，路由组件可以通过route里面设置prop:true便可以通过组件内的props来接受传过来的params参数
         },
-
-    //   goSearch() {
-    //   //代表的是如果有query参数也带过去
-    //   if (this.$route.query) {
-    //     let loction = {
-    //       name: "search",
-    //       params: { keyword: this.keyword || undefined },
-    //     };
-    //     loction.query = this.$route.query;
-    //     this.$router.push(loction);
-    //   }
-    // },
+        //退出登陆
+        logout(){
+          try {
+              this.$store.dispatch('userLogout')
+              this.$router.push('/home')
+          } catch (error) {
+               alert('error.message')
+          }
+         
+        }
+    },
+    computed: {
+      userName(){
+        return this.$store.state.userInfo.userInfo.name
+      }
     },
 };
 </script>

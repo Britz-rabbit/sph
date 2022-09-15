@@ -3,23 +3,7 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
-          <div class="swiper-wrapper">
-            <div
-              class="swiper-slide"
-              v-for="(carousel, index) in bannerList"
-              :key="carousel.id"
-            >
-              <img :src="carousel.imgUrl" />
-            </div>
-          </div>
-          <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
-
-          <!-- 如果需要导航按钮 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
+        <Carousel :list="bannerList"></Carousel>
       </div>
       <div class="right">
         <div class="news">
@@ -96,45 +80,22 @@
 
 <script>
 import { mapState } from "vuex";
-import Swiper from "swiper";
 
 export default {
-  name: "List",
-  mounted() {
-    //派发action，使用vuex发送请求，并将返回的数据存储到vuex中
-    this.$store.dispatch("getBannerList");
-  },
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapState({
-      bannerList: (state) => state.home.bannerList,
-    }),
-  },
-  watch: {
-    bannerList: {
-      handler(value) {
-        this.$nextTick(() => {
-          // init Swiper:
-          const swiper = new Swiper(".swiper-container", {
-            // modules: [Navigation, Pagination],
-            // direction: 'vertical',
-            loop: true,
-            autoplay: true,
-            pagination: {
-              el: ".swiper-pagination",
-              clickable: true,
-            },
-            navigation: {
-              nextEl: ".swiper-button-next",
-              prevEl: ".swiper-button-prev",
-            },
-          });
-        });
-      },
+    name: "List",
+    //components:{Carousel},
+    mounted() {
+        //派发action，使用vuex发送请求，并将返回的数据存储到vuex中
+        this.$store.dispatch("getBannerList");
     },
-  },
+    data() {
+        return {};
+    },
+    computed: {
+        ...mapState({
+            bannerList: (state) => state.home.bannerList,
+        }),
+    },
 };
 </script>
 

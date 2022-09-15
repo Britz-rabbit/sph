@@ -1,4 +1,4 @@
-import {getBaseCategoryList, reqGetBannerList} from '@/api'
+import {getBaseCategoryList, reqGetBannerList,reqGetFloorList} from '@/api'
 
 
 
@@ -8,6 +8,9 @@ const state={
   categoryList:[],
   //轮播图的数据
   bannerList:[],
+  //底部轮播图数据
+  floorList:[],
+
 }
 //mutations用于修改业务
 const mutations={
@@ -18,6 +21,9 @@ const mutations={
   //
   GETBANNERLIST(state,bannerList){
     state.bannerList=bannerList
+  },
+  GETFLOORLIST(state,floorList){
+    state.floorList = floorList
   }
 }
 //actions用于书写业务逻辑和异步的处理
@@ -35,6 +41,11 @@ const actions={
     if(res.code===200){
       commit('GETBANNERLIST',res.data)
     }
+  },
+  //获取底部轮播图数据
+  async getFloorList({commit}){
+    let res = await reqGetFloorList()
+    if(res.code===200) commit('GETFLOORLIST',res.data)
   }
 }
 //getters类似vue文件的计算属性，常用做数据的加工，简化操作

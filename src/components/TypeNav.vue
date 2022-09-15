@@ -60,6 +60,7 @@
 <script>
 //引入vuex的辅助函数mapstate，根据名字也能猜到，这个是将vuex的数据映射过来的函数，通常放在组件的computed内
 import { mapState } from "vuex";
+//引入lodash的节流
 import throttle from 'lodash/throttle'
 export default {
   name: "TypeNav",
@@ -104,10 +105,10 @@ export default {
       //e.target.dataset是存储自定义属性的对象。vue中的自定义属性是data-xxx的形式
       //此处写categoryName和无法被识别，因为浏览器会自动把属性解析为小写，故应写categoryname
       const {categoryname,category1id,category2id,category3id}=e.target.dataset
-      console.log(categoryname)
+      //console.log(categoryname)
      // this.$router.push('/search')
 
-     //通过自定义属性的方式来查明点击的是哪个标签，之后整理query参数再跳转路由。传递的参数有两个categoryname和categoryid
+     //通过自定义属性的方式来查明点击的是哪个标签，之后整理query参数再跳转路由。传递的参数有categoryname和categoryid
       if(categoryname){
         let location={name:'search'}
         let query={categoryName:categoryname}
